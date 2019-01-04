@@ -1,0 +1,7 @@
+rule "Reverse DNS lookup: src_addr"
+when has_field("src_addr2")
+then
+  let result = lookup("reverse-dns-ipv4", to_string($message.src_addr2));
+  set_field("src_addr2_domain", result.domain);
+  set_field("src_addr2_full_domain", result.full_domain);
+end

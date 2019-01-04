@@ -1,0 +1,7 @@
+rule "Is from a Tor Exit Node: src_addr2"
+when 
+    has_field("src_addr")
+then
+    let tor_lookup = tor_lookup(to_string($message.src_addr));
+    set_field("src_addr_is_from_tor_network", tor_lookup.threat_indicated);
+end
