@@ -1,0 +1,8 @@
+# This uses a pure lookup table and not the tor_lookup pipeline function
+rule "Is from a Tor Exit Node: src_addr"
+when 
+    has_field("src_addr")
+then
+    let tor_lookup = lookup( "tor-exit-node-list", to_string($message.src_addr));
+    set_field("from_tor_exit_node", is_not_null(join(tor_lookup.node_ids)));
+end
